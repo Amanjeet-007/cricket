@@ -7,33 +7,52 @@
     <title>Cricket</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <div class="upper">
         
+        <div class="getting">
+        <h2>Cricket Score Board</h2>  
+        <h4>How Many....</h4> 
+        <div class="update">
+            <label for="Over">Total Over</label>
+            <input type="number" name="" id="totalOver">
+            <label for="wicket">Total Wicket</label>
+            <input type="number" name="" id="totalWicket">
+        </div> 
+        <!-- <button onclick="gett()">Submit</button> 
+               -->
+               <button onclick="submit()">Submit</button>      
+
+        </div>
+        <div class="inning">
+
+            <div class="runrate"></div>
+            <div class="target">
+                <h4>TARGET</h4>
+                <p></p>
+            </div>
+            <div class="reach"></div>
+
+
+            
+        </div>
         <div class="updater">
             <div class="screen">
                 <div class="top">
                     <div class="run tt">Run
-                        <p>0</p>
+                        <p></p>
                     </div>
                     <div class="over tt">Over
-                        <p>
-                            00
-                        </p>
-
+                        <p></p>
                     </div>
                     <div class="wicket tt">Wicket
-                        <p>
-                            
-                        </p>
-
+                        <p></p>
                     </div>
 
 
 
                 </div>
-                <div class="down">
+                <div class="Display">
                     <h5>This over</h5>
 
                 </div>
@@ -42,15 +61,15 @@
 
             </div>
             <!-- run buttons -->
-            <button class="runb">1</button>
-            <button class="runb">2</button>
-            <button class="runb">3</button>
-            <button class="runb">4</button>
-            <!-- <button class="runb">5</button> -->
-            <button class="runb">6</button>
+            <button class="runBtn">1</button>
+            <button class="runBtn">2</button>
+            <button class="runBtn">3</button>
+            <button class="runBtn">4</button>
+            <!-- <button class="runBtn">5</button> -->
+            <button class="runBtn">6</button>
             <div class="balls">
                 <button id="Dot">Dot Ball</button>
-                <button id="wicketb">Wicket</button>
+                <button id="wicketBtn">Wicket</button>
                 <button id="WD">Wide Ball</button>
                 <button id="NB">No Ball</button>
             </div>

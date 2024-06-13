@@ -1,115 +1,151 @@
+// popup ----getting value od over and wicket throught it
+const popup = document.querySelector(".getting")
+let overLimit = document.getElementById("totalOver");
+let wicketLimit = document.getElementById("totalWicket");
 
-// displaying display
-const down = document.querySelector(".down");
-// ball bottons
-const wicket = document.querySelector("#wicketb");
-const wicketno = document.querySelector(".wicket");
-wicketno.childNodes[1].innerText = 0;
-
-const dot = document.querySelector("#Dot");
-const wd = document.querySelector("#WD");
-const nb = document.querySelector("#NB");
-// run button
-const run = document.querySelectorAll(".runb");
-// run
-let Run = 0;
-const over = [];
+let OL = 0;
+let WL = 0;
 
 
+const submit = ()=>{
+    OL = overLimit.value;
+    WL = wicketLimit.value;
+    popup.style.display = "none";
+}
 
-// display run 
-const dRun = document.querySelector(".run");
-let Trun = dRun.childNodes[1];
+// popup ends-----------------
 
+// start board code from here----------
+  //selection of All iteam of board
 
-//  making array for over
-const arr = [];
+    
+  let inning = document.querySelector(".inning");
+let displayRun = document.querySelector(".run p");
+displayRun.innerHTML = 0 ;
 
+let displayOver = document.querySelector(".over p");
+displayOver.innerHTML = 0;
+    
+let displayWicket = document.querySelector(".wicket p");
+displayWicket.innerHTML = 0;
 
-wicket.addEventListener("click", () => {
-    down.innerHTML += ` <div class="num"  style="background-color: red;">W</div>`;
-    wicketno.childNodes[1].innerText++
-    arr.push(wicket);
+let runArray = [];
+let Allover = [];
 
-    if (arr.length > 5) {
-        down.innerHTML = `<h5>This over</h5>` ;
-       setTimeout(()=>{
-       dover1.innerHTML++
-       // console.log("over one");
-       for (let i = 1; i < 7; i++) {
-           arr.pop()
-          
-       }
-       },200)
-       
-    //    console.log(down.childElementCount)
+// function for do work after every 6 ball
+let calBall = ()=>{
+    if((runArray.length%6) == 0){
+        Display.innerHTML = ` <h5>This over</h5>`;
+        Allover.push(runArray);
+        runArray = [];
+        console.table(Allover)
 
-   } 
+        displayOver.innerHTML++
+    }
+}
+const endInning = ()=>{
+    
+    if(Allover.length == overLimit.value || displayWicket.textContent == wicketLimit.value){
+        inning.childNodes[3].childNodes[3].innerHTML = Number(displayRun.innerHTML)+1
+ Display.innerHTML = ` <h5>This over</h5>`;
+  displayRun.innerHTML = 0 ;
+  displayOver.innerHTML = 0 ; 
+  displayWicket.innerHTML = 0 ;
+  inning.style.display = "flex";
+   
+  wicketLimit.value = WL;
+  overLimit.value = OL;
+//   winner checking
+if(inning.childNodes[3].childNodes[3].innerHTML){
+    if(displayRun.innerHTML > inning.childNodes[3].childNodes[3].innerHTML){
+        console.log("Team 2 is winner")
+    }
+    if(displayRun.innerHTML < inning.childNodes[3].childNodes[3].innerHTML){
+        console.log("Team 1 is winner")
+    }
 
-    if (wicketno.childNodes[1].innerHTML == 10) {
-
-
-        // ----working Here
-        wicketno.childNodes[1].innerText = 0 ; 
-        console.log("all Out")
-
+}
 
 
     }
-    
+   
+    // if(inning.childNodes[3])
+   
+}
 
 
-})
-dot.addEventListener("click", () => {
-    down.innerHTML += ` <div class="num">.</div>`
-    arr.push(dot);
-    if (arr.length > 5) {
-        down.innerHTML = `<h5>This over</h5>` ;
-       setTimeout(()=>{
-       dover1.innerHTML++
-       // console.log("over one");
-       for (let i = 1; i < 7; i++) {
-           arr.pop()
-          
-       }
-       },200)
-       
-    //    console.log(down.childElementCount)
+let Display = document.querySelector(".Display")
+let runBtn = document.querySelectorAll(".runBtn");
 
-   } 
-})
-wd.addEventListener("click", () => {
-    down.innerHTML += ` <div class="num">wd</div>`
-})
+runBtn.forEach(btn=>{
+    btn.addEventListener("click",()=>{
+        runArray.push(Number(btn.innerHTML));
 
-let dover = document.querySelector(".over");
-let dover1 = dover.childNodes[1];
-dover1.innerHTML = 0;
+        Display.innerHTML += ` <div class="num"  >${btn.innerHTML}</div>`;
 
-run.forEach(el => {
-    el.addEventListener("click", () => {
-        down.innerHTML += ` <div class="num">${el.innerText}</div>`
-        let t = Number(el.innerText);
-        arr.push(el.innerText);
+        calBall();
+        endInning()
 
-        Run += t
-        Trun.innerHTML = Run
+        // adding run
+        displayRun.innerHTML = Number(displayRun.innerHTML)+Number(btn.innerHTML)
 
-        if (arr.length > 5) {
-             down.innerHTML = `<h5>This over</h5>` ;
-            setTimeout(()=>{
-            dover1.innerHTML++
-            // console.log("over one");
-            for (let i = 1; i < 7; i++) {
-                arr.pop()
-               
-            }
-            },200)
-            
-            // console.log(down.childElementCount)
-
-        } 
+        console.log(runArray);
     })
 })
+
+const Dot = document.getElementById("Dot");
+Dot.addEventListener("click",()=>{
+    runArray.push(".");
+    Display.innerHTML += ` <div class="num">.</div>`;
+   calBall();
+   endInning()
+});
+
+const wicketBtn = document.getElementById("wicketBtn");
+wicketBtn.addEventListener("click",()=>{
+    runArray.push("W");
+    Display.innerHTML += `<div class="num"  style="background-color: red;">W</div>`;
+
+
+    displayWicket.innerHTML++
+
+    calBall();
+    endInning()
+
+});
+
+const wide = document.getElementById("WD");
+wide.addEventListener("click",()=>{
+    // runArray.push("WD");
+    Display.innerHTML += ` <div class="num">WD</div>`;
+});
+
+const noBall = document.getElementById("NB");
+noBall.addEventListener("click",()=>{
+    // runArray.push("N");
+    Display.innerHTML += ` <div class="num">N</div>`;
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
